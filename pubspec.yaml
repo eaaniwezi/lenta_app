@@ -1,0 +1,47 @@
+name: lenta_app
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+#!periferials
+  google_fonts: ^3.0.1
+  flutter_svg: ^0.22.0
+  cupertino_icons: ^1.0.2
+
+#!network calls/state management
+  get: ^4.3.8
+  dio: ^4.0.4 
+  get_it: ^7.2.0
+  geocoding: ^2.0.4
+  equatable: ^2.0.3
+  geolocator: ^9.0.1
+  flutter_bloc: ^7.3.1
+  google_maps_flutter: ^2.1.2
+  flutter_secure_storage: ^4.2.1
+
+#!auto-Mation
+  json_serializable: ^6.1.6
+  json_annotation: ^4.4.0
+  build_runner: ^2.1.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
