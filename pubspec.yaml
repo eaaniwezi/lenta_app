@@ -16,6 +16,7 @@ dependencies:
 #!periferials
   google_fonts: ^3.0.1
   flutter_svg: ^0.22.0
+  fluttertoast: ^8.0.9
   cupertino_icons: ^1.0.2
 
 #!network calls/state management
@@ -29,10 +30,13 @@ dependencies:
   google_maps_flutter: ^2.1.2
   flutter_secure_storage: ^4.2.1
 
+
+
 #!auto-Mation
   json_serializable: ^6.1.6
   json_annotation: ^4.4.0
   build_runner: ^2.1.10
+
 
 dev_dependencies:
   flutter_test:

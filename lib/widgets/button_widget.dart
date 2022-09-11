@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
 import 'package:google_fonts/google_fonts.dart';
 
-
 class ButtonWidget extends StatelessWidget {
   final String buttonLabel;
   final Function onPressed;
@@ -17,9 +16,10 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(left: 10, right: 10, top: 15),
+      padding: EdgeInsets.only(left: 10, right: 10, top: 15),
       child: InkWell(
         onTap: () {
+          FocusScope.of(context).unfocus();
           onPressed();
         },
         child: Container(
@@ -31,7 +31,9 @@ class ButtonWidget extends StatelessWidget {
             child: Text(
               buttonLabel,
               style: GoogleFonts.manrope(
-                  fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white),
             ),
           ),
         ),
