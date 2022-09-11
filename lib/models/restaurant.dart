@@ -7,7 +7,7 @@ part 'restaurant.g.dart';
 
 @JsonSerializable()
 class Restaurant {
-  bool? isFavourite;
+  bool? is_favourite;
   int? id;
   String? title;
   String? description;
@@ -20,7 +20,7 @@ class Restaurant {
   User? user;
 
   Restaurant(
-      {this.isFavourite,
+      {this.is_favourite,
       this.id,
       this.title,
       this.description,

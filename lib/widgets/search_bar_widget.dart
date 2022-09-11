@@ -9,9 +9,11 @@ import '../../const/theme.dart' as style;
 
 class SearchBarWidget extends StatelessWidget {
   final bool? isMapScreen;
+  final Function(String)? sendFunction;
   const SearchBarWidget({
     Key? key,
     this.isMapScreen,
+    this.sendFunction,
   }) : super(key: key);
 
   @override
@@ -24,8 +26,9 @@ class SearchBarWidget extends StatelessWidget {
           color: Colors.black,
           fontWeight: FontWeight.w400,
         ),
+        onChanged: sendFunction,
         decoration: BoxDecoration(
-          color: isMapScreen == true?  Colors.white : null,
+          color: isMapScreen == true ? Colors.white : null,
           borderRadius: BorderRadius.circular(6),
           border: Border.all(color: style.Colors.greyColor),
         ),

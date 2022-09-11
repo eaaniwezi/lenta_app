@@ -20,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required AuthState initialState,
   })  : assert(authRepo != null),
         super(initialState) {
-    add(AppStarted(queryRestuarant: ''));
+    // add(AppStarted(queryRestuarant: ''));
   }
   @override
   Stream<AuthState> mapEventToState(AuthEvent event) async* {
@@ -30,16 +30,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final bool hasToken = await authRepo.hasToken();
         if (hasToken) {
           late final User _userModel;
-          late final List<Restaurant> _restaurantList;
-          late final List<Restaurant> _favRestaurantList;
           _userModel = await authRepo.getUser();
-          _restaurantList = await restaurantRepo.getAllRestaurants(
-              query: event.queryRestuarant);
-          _favRestaurantList = await restaurantRepo.getFavRestaurants();
-          yield UserAuthenticated(
-              userModel: _userModel,
-              allRestaurants: _restaurantList,
-              favRestaurants: _favRestaurantList);
+
+          yield UserAuthenticated(userModel: _userModel);
         } else {
           yield UserUnauthenticated();
         }
@@ -59,16 +52,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       try {
         late final User _userModel;
-        late final List<Restaurant> _restaurantList;
-        late final List<Restaurant> _favRestaurantList;
         _userModel = await authRepo.getUser();
-        _restaurantList =
-            await restaurantRepo.getAllRestaurants(query: "");
-        _favRestaurantList = await restaurantRepo.getFavRestaurants();
-        yield UserAuthenticated(
-            userModel: _userModel,
-            allRestaurants: _restaurantList,
-            favRestaurants: _favRestaurantList);
+        yield UserAuthenticated(userModel: _userModel);
       } catch (e) {
         yield UserUnauthenticated();
       }

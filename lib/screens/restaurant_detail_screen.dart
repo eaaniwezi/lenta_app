@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lenta_app/models/restaurant.dart';
+import 'package:lenta_app/blocs/restaurant/restaurant_bloc.dart';
 
 class RestaurantDetailScreen extends StatefulWidget {
   final Restaurant restaurantModel;
@@ -30,18 +32,31 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
         children: [
           Stack(
             children: [
-              SizedBox(
-                height: size.height * 0.3,
-                width: double.infinity,
-                child: widget.restaurantModel.images!.isEmpty
-                    ? Image.asset(
-                        "assets/empty_store.png",
-                        fit: BoxFit.cover,
-                      )
-                    : Image.network(
-                        widget.restaurantModel.images![0].url.toString(),
-                        fit: BoxFit.cover,
-                      ),
+              Stack(
+                children: [
+                  Positioned.fill(
+                      child: Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                        color: style.Colors.purpleColor),
+                  )),
+                  Container(
+                    height: size.height * 0.3,
+                    width: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: widget.restaurantModel.images!.isEmpty
+                          ? Image.asset(
+                              "assets/empty_store.png",
+                              fit: BoxFit.fill,
+                            )
+                          : Image.network(
+                              widget.restaurantModel.images![0].url.toString(),
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  ),
+                ],
               ),
               Container(
                 color: Colors.black26,
@@ -67,12 +82,20 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Get.back();
+                        widget.restaurantModel.is_favourite == false
+                            ? BlocProvider.of<RestaurantBloc>(context).add(
+                                AddToFavListEvent(
+                                    resturantId: widget.restaurantModel.id!))
+                            : BlocProvider.of<RestaurantBloc>(context).add(
+                                RemoveFromFavListEvent(
+                                    resturantId: widget.restaurantModel.id!));
                       },
-                      icon: SvgPicture.asset(
-                        "assets/heart.svg",
-                        color: Colors.white,
-                      ),
+                      icon: widget.restaurantModel.is_favourite == false
+                          ? SvgPicture.asset("assets/heart.svg",
+                              color: Colors.white)
+                          : SvgPicture.asset(
+                              "assets/heart-filled.svg",
+                            ),
                     )
                   ],
                 ),

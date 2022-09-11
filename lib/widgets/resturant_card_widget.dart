@@ -1,12 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lenta_app/models/restaurant.dart';
+import 'package:lenta_app/blocs/restaurant/restaurant_bloc.dart';
 import 'package:lenta_app/screens/restaurant_detail_screen.dart';
-
 
 class ResturantCardWidget extends StatelessWidget {
   final Restaurant restaurantModel;
@@ -33,21 +35,31 @@ class ResturantCardWidget extends StatelessWidget {
           ),
           child: Column(
             children: [
-              SizedBox(
-                height: 150,
-                width: double.infinity,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: restaurantModel.images!.isEmpty
-                      ? Image.asset(
-                          "assets/empty_store.png",
-                          fit: BoxFit.cover,
-                        )
-                      : Image.network(
-                          restaurantModel.images![0].url.toString(),
-                          fit: BoxFit.cover,
-                        ),
-                ),
+              Stack(
+                children: [
+                  Positioned.fill(
+                      child: Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                        color: style.Colors.purpleColor),
+                  )),
+                  Container(
+                    height: 150,
+                    width: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: restaurantModel.images!.isEmpty
+                          ? Image.asset(
+                              "assets/empty_store.png",
+                              fit: BoxFit.fill,
+                            )
+                          : Image.network(
+                              restaurantModel.images![0].url.toString(),
+                              fit: BoxFit.cover,
+                            ),
+                    ),
+                  ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(12),
@@ -100,8 +112,20 @@ class ResturantCardWidget extends StatelessWidget {
                       ],
                     ),
                     IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset("assets/heart.svg"),
+                      onPressed: () {
+                        restaurantModel.is_favourite == false
+                            ? BlocProvider.of<RestaurantBloc>(context).add(
+                                AddToFavListEvent(
+                                    resturantId: restaurantModel.id!))
+                            : BlocProvider.of<RestaurantBloc>(context).add(
+                                RemoveFromFavListEvent(
+                                    resturantId: restaurantModel.id!));
+                      },
+                      icon: SvgPicture.asset(
+                        restaurantModel.is_favourite == false
+                            ? "assets/heart.svg"
+                            : "assets/heart-filled.svg",
+                      ),
                     )
                   ],
                 ),

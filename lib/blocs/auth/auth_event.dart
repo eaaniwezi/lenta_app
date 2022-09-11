@@ -10,10 +10,7 @@ abstract class AuthEvent extends Equatable {
 }
 
 class AppStarted extends AuthEvent {
-  final String queryRestuarant;
-  const AppStarted({
-    required this.queryRestuarant,
-  });
+ 
 }
 
 class UserIsLoggedIn extends AuthEvent {
