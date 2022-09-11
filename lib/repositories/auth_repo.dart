@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors
 
 import 'package:dio/dio.dart';
 import 'package:lenta_app/models/user.dart';
@@ -18,7 +18,6 @@ class AuthRepo {
       final tokens = await Api().api.post("/api/v1/auth/login", data: userData);
       return Tokens.fromJson(tokens.data['tokens']);
     } catch (e) {
-      print(e);
       return tokens;
     }
   }

@@ -19,6 +19,13 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   bool isSigningIn = false;
+  bool _showPassword = false;
+  void _togglevisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
   final _globalkey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -26,7 +33,6 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        print(state.toString() + " this is the state");
         if (state is UserLoginLoading) {
           setState(() {
             isSigningIn = true;
@@ -70,14 +76,23 @@ class _SignInScreenState extends State<SignInScreen> {
                   hintText: "Пароль",
                   isLast: true,
                   controller: _passwordController,
+                  seePassword: () => _togglevisibility(),
+                  suffixIconSvg: _showPassword
+                      ? "assets/visibility_on.svg"
+                      : "assets/visibility_off.svg",
+                  isPassword: true,
+                  obscureText: !_showPassword,
                   validator: (String? value) {
                     if (value!.isEmpty) {
                       return "Cant be empty";
+                    } else if (value.length < 8) {
+                      return "Password must be at least 8 characters long";
                     }
                     return null;
                   },
                 ),
                 SizedBox(height: 25),
+                _errorMessage(),
                 isSigningIn == true
                     ? CircularProgressIndicator(color: style.Colors.purpleColor)
                     : ButtonWidget(
@@ -106,6 +121,24 @@ class _SignInScreenState extends State<SignInScreen> {
               ],
             ),
           )),
+    );
+  }
+
+  _errorMessage() {
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        if (state is UserLoginFailure) {
+          return Text(
+            "Error signing in",
+            style: GoogleFonts.manrope(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: style.Colors.redColor,
+            ),
+          );
+        }
+        return Text("");
+      },
     );
   }
 

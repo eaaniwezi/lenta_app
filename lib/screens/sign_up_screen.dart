@@ -51,11 +51,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             isSigningUp = false;
           });
         }
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-            builder: (context) {
-              return MainPage();
-            },
-          ), (route) => false);
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+          builder: (context) {
+            return MainPage();
+          },
+        ), (route) => false);
       },
       child: Scaffold(
           appBar: _appBar(),
@@ -89,6 +89,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (String? value) {
                     if (value!.isEmpty) {
                       return "Cant be empty";
+                    } else if (value.length < 3) {
+                      return "Must be at least 3 characters long";
                     }
                     return null;
                   },
@@ -101,6 +103,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (String? value) {
                     if (value!.isEmpty) {
                       return "Cant be empty";
+                    } else if (value.length < 2) {
+                      return "too short";
                     }
                     return null;
                   },
@@ -129,13 +133,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   validator: (String? value) {
                     if (value!.isEmpty) {
                       return "Cant be empty";
+                    } else if (value.length < 8) {
+                      return "Password must be at least 8 characters long";
                     }
                     return null;
                   },
                 ),
+                _errorMessage(),
               ],
             ),
           )),
+    );
+  }
+
+  _errorMessage() {
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      builder: (context, state) {
+        if (state is RegisteringUserFailure) {
+          return Text(
+            "\n\nError Creating an acount",
+            style: GoogleFonts.manrope(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: style.Colors.redColor,
+            ),
+          );
+        }
+        return Text("");
+      },
     );
   }
 

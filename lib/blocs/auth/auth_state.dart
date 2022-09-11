@@ -17,12 +17,15 @@ class LoadingUserProfile extends AuthState {}
 
 class UserAuthenticated extends AuthState {
   final User userModel;
+  final List<Restaurant> allRestaurants;
+  final List<Restaurant> favRestaurants;
   const UserAuthenticated({
-  required this.userModel,
+    required this.userModel,
+    required this.allRestaurants,
+    required this.favRestaurants,
   });
 }
 
 class UserUnauthenticated extends AuthState {}
 
 class UserLoading extends AuthState {}
-

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:lenta_app/models/user.dart';
 
@@ -49,10 +51,10 @@ class Schedule {
 class Coords {
   double? longitude;
   double? latitude;
-  String? addressName;
+  String? address_name;
   int? id;
 
-  Coords({this.longitude, this.latitude, this.addressName, this.id});
+  Coords({this.longitude, this.latitude, this.address_name, this.id});
   factory Coords.fromJson(Map<String, dynamic> json) =>
       _$CoordsFromJson(json);
 }

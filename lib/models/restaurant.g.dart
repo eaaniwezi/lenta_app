@@ -58,14 +58,14 @@ Map<String, dynamic> _$ScheduleToJson(Schedule instance) => <String, dynamic>{
 Coords _$CoordsFromJson(Map<String, dynamic> json) => Coords(
       longitude: (json['longitude'] as num?)?.toDouble(),
       latitude: (json['latitude'] as num?)?.toDouble(),
-      addressName: json['addressName'] as String?,
+      address_name: json['address_name'] as String?,
       id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$CoordsToJson(Coords instance) => <String, dynamic>{
       'longitude': instance.longitude,
       'latitude': instance.latitude,
-      'addressName': instance.addressName,
+      'address_name': instance.address_name,
       'id': instance.id,
     };
 

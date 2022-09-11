@@ -9,7 +9,12 @@ abstract class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AppStarted extends AuthEvent {}
+class AppStarted extends AuthEvent {
+  final String queryRestuarant;
+  const AppStarted({
+    required this.queryRestuarant,
+  });
+}
 
 class UserIsLoggedIn extends AuthEvent {
   final String accessToken;
@@ -23,6 +28,5 @@ class UserIsLoggedIn extends AuthEvent {
   @override
   List<Object> get props => [accessToken, refreshToken];
 }
-
 
 class LogOutEvent extends AuthEvent {}

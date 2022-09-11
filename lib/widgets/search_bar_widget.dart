@@ -1,13 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../../const/theme.dart' as style;
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../const/theme.dart' as style;
+
 class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({Key? key}) : super(key: key);
+  final bool? isMapScreen;
+  const SearchBarWidget({
+    Key? key,
+    this.isMapScreen,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +25,14 @@ class SearchBarWidget extends StatelessWidget {
           fontWeight: FontWeight.w400,
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            border: Border.all(color: style.Colors.greyColor)),
+          color: isMapScreen == true?  Colors.white : null,
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: style.Colors.greyColor),
+        ),
         prefixIcon: Padding(
-          padding: const EdgeInsets.only(right: 5,),
+          padding: const EdgeInsets.only(
+            right: 5,
+          ),
           child: SvgPicture.asset(
             "assets/search.svg",
             height: 14.93,

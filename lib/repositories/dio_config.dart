@@ -15,9 +15,8 @@ class Api {
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
       final accessToken = await _storage.read(key: "accessToken");
       if (!options.path.contains('http')) {
-        options.path = 'http://api.codeunion.kz' + options.path;
+        options.path = 'http://188.225.83.80:6719' + options.path;
       }
-      print(accessToken);
       accessToken == null
           ? options.headers = {
               "Accept": "application/json",
