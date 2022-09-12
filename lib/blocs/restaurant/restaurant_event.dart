@@ -18,6 +18,8 @@ class FetchRestaurantEvent extends RestaurantEvent {
   List<Object> get props => [ queryRestuarant];
 }
 
+
+
 class AddToFavListEvent extends RestaurantEvent {
   final int resturantId;
   AddToFavListEvent({

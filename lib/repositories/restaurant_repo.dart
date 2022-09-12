@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, empty_catches
+// ignore_for_file: unnecessary_new, empty_catches, prefer_typing_uninitialized_variables
 
 import 'package:lenta_app/models/restaurant.dart';
 import 'package:lenta_app/repositories/dio_config.dart';
@@ -26,6 +26,18 @@ class RestaurantRepo {
       return _searchedList;
     } catch (e) {
       return _intialList;
+    }
+  }
+
+  Future<Restaurant> getRestaurant({required int restaurantId}) async {
+    var restaurant;
+    try {
+      var restaurant =
+          await Api().api.get("/api/v1/restaurants/details/$restaurantId");
+    // print(restaurant);
+      return Restaurant.fromJson(restaurant.data);
+    } catch (e) {
+      return restaurant;
     }
   }
 

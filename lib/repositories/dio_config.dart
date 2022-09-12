@@ -1,7 +1,7 @@
-// ignore_for_file: deprecated_member_use, prefer_const_constructors, avoid_print, unnecessary_null_comparison
+// ignore_for_file: deprecated_member_use, prefer_const_constructors, avoid_print, unnecessary_null_comparison, library_prefixes
 
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' as GetPackage;
+import 'package:get/get.dart' as getPackage;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lenta_app/repositories/auth_repo.dart';
 import 'package:lenta_app/screens/sign_in_screen.dart';
@@ -36,7 +36,7 @@ class Api {
         }
       } catch (e) {
         _storage.deleteAll();
-        GetPackage.Get.offAll(() => SignInScreen());
+        getPackage.Get.offAll(() => SignInScreen());
       }
 
       return handler.next(error);

@@ -24,17 +24,12 @@ class SuccessFetchingRestaurantState extends RestaurantState {
 
 class ErrorFetchingRestaurantState extends RestaurantState {}
 
+
+
 class AddToFavListState extends RestaurantState {
-  // final List<Restaurant> favRestaurants;
-  // AddToFavListState({
-  //   required this.favRestaurants,
-  // });
+
 }
 
 class RemoveFromFavListState extends RestaurantState {
-  // final List<Restaurant> favRestaurants;
-
-  // RemoveFromFavListState({
-  //   required this.favRestaurants,
-  // });
+  
 }

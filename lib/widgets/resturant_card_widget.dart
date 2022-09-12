@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import '../../const/theme.dart' as style;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +9,11 @@ import 'package:lenta_app/models/restaurant.dart';
 import 'package:lenta_app/blocs/restaurant/restaurant_bloc.dart';
 import 'package:lenta_app/screens/restaurant_detail_screen.dart';
 
+import '../../const/theme.dart' as style;
+
 class ResturantCardWidget extends StatelessWidget {
   final Restaurant restaurantModel;
+
   const ResturantCardWidget({
     Key? key,
     required this.restaurantModel,

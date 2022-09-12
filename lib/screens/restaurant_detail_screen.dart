@@ -40,7 +40,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                     child: CircularProgressIndicator(
                         color: style.Colors.purpleColor),
                   )),
-                  Container(
+                  SizedBox(
                     height: size.height * 0.3,
                     width: double.infinity,
                     child: ClipRRect(
@@ -80,22 +80,41 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        widget.restaurantModel.is_favourite == false
-                            ? BlocProvider.of<RestaurantBloc>(context).add(
-                                AddToFavListEvent(
-                                    resturantId: widget.restaurantModel.id!))
-                            : BlocProvider.of<RestaurantBloc>(context).add(
-                                RemoveFromFavListEvent(
-                                    resturantId: widget.restaurantModel.id!));
+                    BlocConsumer<RestaurantBloc, RestaurantState>(
+                      listener: (context, state) {},
+                      buildWhen: (oldState, newState) =>
+                          newState is FetchingRestaurantState ||
+                          newState is SuccessFetchingRestaurantState ||
+                          newState is ErrorFetchingRestaurantState,
+                      builder: (context, state) {
+                        if (state is SuccessFetchingRestaurantState) {
+                          var _restaurantList = state.allRestaurants;
+                          for (var restaurantModel in _restaurantList) {
+                            if (restaurantModel.id ==
+                                widget.restaurantModel.id) {
+                              return IconButton(
+                                onPressed: () {
+                                  restaurantModel.is_favourite == false
+                                      ? BlocProvider.of<RestaurantBloc>(context)
+                                          .add(AddToFavListEvent(
+                                              resturantId: restaurantModel.id!))
+                                      : BlocProvider.of<RestaurantBloc>(context)
+                                          .add(RemoveFromFavListEvent(
+                                              resturantId:
+                                                  restaurantModel.id!));
+                                },
+                                icon: restaurantModel.is_favourite == false
+                                    ? SvgPicture.asset("assets/heart.svg",
+                                        color: Colors.white)
+                                    : SvgPicture.asset(
+                                        "assets/heart-filled.svg",
+                                      ),
+                              );
+                            }
+                          }
+                        }
+                        return Text("");
                       },
-                      icon: widget.restaurantModel.is_favourite == false
-                          ? SvgPicture.asset("assets/heart.svg",
-                              color: Colors.white)
-                          : SvgPicture.asset(
-                              "assets/heart-filled.svg",
-                            ),
                     )
                   ],
                 ),

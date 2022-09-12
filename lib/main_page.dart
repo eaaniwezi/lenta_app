@@ -8,7 +8,7 @@ import 'package:lenta_app/screens/profile_screen.dart';
 import 'package:lenta_app/screens/favourite_screen.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -28,8 +28,7 @@ class _MainPageState extends State<MainPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: pages[pageIndex],
-      bottomNavigationBar: Container(
-        // color: Colors.red,
+      bottomNavigationBar: SizedBox(
         height: size.height * 0.09,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:lenta_app/widgets/resturant_card_widget.dart';
 import '../../const/theme.dart' as style;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lenta_app/widgets/resturant_card_widget.dart';
 import 'package:lenta_app/blocs/restaurant/restaurant_bloc.dart';
 
 class FavouriteScreen extends StatelessWidget {
-  const FavouriteScreen({Key? key}) : super(key: key);
+  const FavouriteScreen({ Key? key }) : super(key: key);
 
-  @override
+ @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _appBar(),
-      body: BlocBuilder<RestaurantBloc, RestaurantState>(
+      body: BlocConsumer<RestaurantBloc, RestaurantState>(
+        listener: (context, state) {},
+        buildWhen: (oldState, newState) =>
+            newState is FetchingRestaurantState ||
+            newState is SuccessFetchingRestaurantState ||
+            newState is ErrorFetchingRestaurantState,
         builder: (context, state) {
           if (state is SuccessFetchingRestaurantState) {
             var restaurantList = state.favRestaurants;
@@ -26,6 +31,7 @@ class FavouriteScreen extends StatelessWidget {
                           restaurantModel: restaurantList[index]);
                     });
           }
+
           if (state is ErrorFetchingRestaurantState) {
             return _errorState(size);
           }

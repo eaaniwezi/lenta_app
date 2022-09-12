@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:json_annotation/json_annotation.dart';
 import 'package:lenta_app/models/user.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'restaurant.g.dart';
 
@@ -11,9 +11,9 @@ class Restaurant {
   int? id;
   String? title;
   String? description;
-  int? scheduleId;
-  int? coordsId;
-  int? userId;
+  int? schedule_id;
+  int? coords_id;
+  int? user_id;
   Schedule? schedule;
   Coords? coords;
   List<Images>? images;
@@ -24,9 +24,9 @@ class Restaurant {
       this.id,
       this.title,
       this.description,
-      this.scheduleId,
-      this.coordsId,
-      this.userId,
+      this.schedule_id,
+      this.coords_id,
+      this.user_id,
       this.schedule,
       this.coords,
       this.images,

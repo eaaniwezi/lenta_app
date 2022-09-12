@@ -1,9 +1,8 @@
 // ignore_for_file: unnecessary_null_comparison, prefer_const_constructors
 
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
 import '../../models/restaurant.dart';
+import 'package:equatable/equatable.dart';
 import '../../repositories/restaurant_repo.dart';
 
 part 'restaurant_event.dart';
@@ -35,8 +34,10 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
       } catch (e) {
         yield ErrorFetchingRestaurantState();
       }
-    } else if (event is AddToFavListEvent) {
+    }
+   else if (event is AddToFavListEvent) {
       try {
+        yield RestaurantInitial();
         await restaurantRepo.addToFavList(resturantId: event.resturantId);
         late final List<Restaurant> _restaurantList;
         late final List<Restaurant> _favRestaurantList;
@@ -46,15 +47,14 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
           allRestaurants: _restaurantList,
           favRestaurants: _favRestaurantList,
         );
-        // yield AddToFavListState();
-        // add(FetchRestaurantEvent(queryRestuarant: ""));
-      } catch (e) {
+        } catch (e) {
         add(FetchRestaurantEvent(queryRestuarant: ""));
       }
     } else if (event is RemoveFromFavListEvent) {
       try {
+        yield RestaurantInitial();
         await restaurantRepo.removeFromFavList(resturantId: event.resturantId);
-        late final List<Restaurant> _restaurantList;
+         late final List<Restaurant> _restaurantList;
         late final List<Restaurant> _favRestaurantList;
         _restaurantList = await restaurantRepo.getAllRestaurants(query: "");
         _favRestaurantList = await restaurantRepo.getFavRestaurants();
@@ -62,11 +62,10 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
           allRestaurants: _restaurantList,
           favRestaurants: _favRestaurantList,
         );
-        // yield RemoveFromFavListState();
-        // add(FetchRestaurantEvent(queryRestuarant: ""));
       } catch (e) {
         add(FetchRestaurantEvent(queryRestuarant: ""));
       }
     }
   }
+
 }

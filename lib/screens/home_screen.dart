@@ -14,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
           body: Column(
@@ -27,22 +28,28 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
-          BlocBuilder<RestaurantBloc, RestaurantState>(
+          BlocConsumer<RestaurantBloc, RestaurantState>(
+            listener: (context, state) {},
+            buildWhen: (oldState, newState) =>
+                newState is FetchingRestaurantState ||
+                newState is SuccessFetchingRestaurantState ||
+                newState is ErrorFetchingRestaurantState,
             builder: (context, state) {
               if (state is SuccessFetchingRestaurantState) {
                 var restaurantList = state.allRestaurants;
+
                 return restaurantList.isEmpty
                     ? _emptyData(size)
                     : Expanded(
                         child: ListView(
                             children:
                                 state.allRestaurants.map((restaurantModel) {
-                              
                           return ResturantCardWidget(
                               restaurantModel: restaurantModel);
                         }).toList()),
                       );
               }
+
               if (state is ErrorFetchingRestaurantState) {
                 return _errorState(size);
               }
@@ -91,7 +98,7 @@ class HomeScreen extends StatelessWidget {
   _loadingWidget(Size size) {
     return Padding(
       padding: EdgeInsets.only(top: size.height * 0.3),
-      child: CircularProgressIndicator(color: style.Colors.purpleColor),
+      child: Center(child: CircularProgressIndicator(color: style.Colors.purpleColor)),
     );
   }
 }

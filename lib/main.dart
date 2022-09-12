@@ -20,7 +20,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]);
+  ]);   
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(create: (_) => di.sl<AuthBloc>()..add(AppStarted())),
