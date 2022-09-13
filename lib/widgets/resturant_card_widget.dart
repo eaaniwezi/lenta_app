@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
+import 'package:auto_route/auto_route.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lenta_app/models/restaurant.dart';
 import 'package:lenta_app/blocs/restaurant/restaurant_bloc.dart';
 import 'package:lenta_app/screens/restaurant_detail_screen.dart';
+import 'package:lenta_app/screens/routes.dart/app_router.gr.dart';
 
 import '../../const/theme.dart' as style;
 
@@ -20,14 +22,15 @@ class ResturantCardWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  final router = AutoRouter.of(context);
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          Get.to(
-              () => RestaurantDetailScreen(restaurantModel: restaurantModel));
+          // Get.to(
+          //     () => RestaurantDetailScreen(restaurantModel: restaurantModel));
+              router.push(RestaurantDetailScreenRoute(restaurantModel: restaurantModel));
         },
         child: Container(
           height: 234,

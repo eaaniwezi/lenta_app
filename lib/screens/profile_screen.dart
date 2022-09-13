@@ -1,26 +1,23 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
+import 'package:auto_route/auto_route.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lenta_app/blocs/auth/auth_bloc.dart';
-import 'package:lenta_app/screens/sign_in_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is UserUnauthenticated) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-            builder: (context) {
-              return SignInScreen();
-            },
-          ), (route) => false);
+          router.replaceNamed('/sign-in');
         }
       },
       child: Scaffold(
@@ -73,10 +70,10 @@ class ProfileScreen extends StatelessWidget {
                       return Text(
                         userModel.email.toString(),
                         style: GoogleFonts.manrope(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                      ),
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                        ),
                       );
                     }
                     return Text(

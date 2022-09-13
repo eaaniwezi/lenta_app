@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
 import 'package:lenta_app/main_page.dart';
@@ -31,6 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is UserLoginLoading) {
@@ -47,11 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
           setState(() {
             isSigningIn = false;
           });
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-            builder: (context) {
-              return MainPage();
-            },
-          ), (route) => false);
+          router.replaceNamed('/main-page');
         }
       },
       child: Scaffold(
@@ -112,10 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     : ButtonWidget(
                         buttonLabel: "Зарегистрироваться",
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpScreen()));
+                          router.pushNamed('/sign-up');
                         },
                       ),
               ],

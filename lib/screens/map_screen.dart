@@ -110,11 +110,13 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void animateCamera() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 16,
-        target:
-            LatLng(currentLocation!.latitude, currentLocation!.longitude))));
+    try {
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          zoom: 16,
+          target:
+              LatLng(currentLocation!.latitude, currentLocation!.longitude))));
+    } catch (e) {}
   }
 
   void getMarkers() async {

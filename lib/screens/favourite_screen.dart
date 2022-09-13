@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
 import 'package:flutter_bloc/flutter_bloc.dart';

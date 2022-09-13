@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../const/theme.dart' as style;
-import 'package:lenta_app/main_page.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lenta_app/widgets/button_widget.dart';
@@ -33,6 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final router = AutoRouter.of(context);
     Size size = MediaQuery.of(context).size;
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
@@ -51,11 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             isSigningUp = false;
           });
         }
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          builder: (context) {
-            return MainPage();
-          },
-        ), (route) => false);
+        router.replaceNamed('/main-page');
       },
       child: Scaffold(
           appBar: _appBar(),
@@ -79,68 +76,70 @@ class _SignUpScreenState extends State<SignUpScreen> {
               FloatingActionButtonLocation.miniCenterFloat,
           body: Form(
             key: _globalkey,
-            child: Column(
-              children: [
-                SizedBox(height: size.height * 0.04),
-                TextFormFieldWidget(
-                  hintText: "Логин",
-                  isLast: false,
-                  controller: _loginController,
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return "Cant be empty";
-                    } else if (value.length < 3) {
-                      return "Must be at least 3 characters long";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormFieldWidget(
-                  hintText: "Телефон",
-                  isLast: false,
-                  isPhoneNumber: true,
-                  controller: _phoneNoController,
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return "Cant be empty";
-                    } else if (value.length < 2) {
-                      return "too short";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormFieldWidget(
-                  hintText: "Почта",
-                  isLast: false,
-                  controller: _emailController,
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return "Cant be empty";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormFieldWidget(
-                  hintText: "Пароль",
-                  isLast: true,
-                  controller: _passwordController,
-                  seePassword: () => _togglevisibility(),
-                  suffixIconSvg: _showPassword
-                      ? "assets/visibility_on.svg"
-                      : "assets/visibility_off.svg",
-                  isPassword: true,
-                  obscureText: !_showPassword,
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return "Cant be empty";
-                    } else if (value.length < 8) {
-                      return "Password must be at least 8 characters long";
-                    }
-                    return null;
-                  },
-                ),
-                _errorMessage(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * 0.04),
+                  TextFormFieldWidget(
+                    hintText: "Логин",
+                    isLast: false,
+                    controller: _loginController,
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return "Cant be empty";
+                      } else if (value.length < 3) {
+                        return "Must be at least 3 characters long";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormFieldWidget(
+                    hintText: "Телефон",
+                    isLast: false,
+                    isPhoneNumber: true,
+                    controller: _phoneNoController,
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return "Cant be empty";
+                      } else if (value.length < 2) {
+                        return "too short";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormFieldWidget(
+                    hintText: "Почта",
+                    isLast: false,
+                    controller: _emailController,
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return "Cant be empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormFieldWidget(
+                    hintText: "Пароль",
+                    isLast: true,
+                    controller: _passwordController,
+                    seePassword: () => _togglevisibility(),
+                    suffixIconSvg: _showPassword
+                        ? "assets/visibility_on.svg"
+                        : "assets/visibility_off.svg",
+                    isPassword: true,
+                    obscureText: !_showPassword,
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return "Cant be empty";
+                      } else if (value.length < 8) {
+                        return "Password must be at least 8 characters long";
+                      }
+                      return null;
+                    },
+                  ),
+                  _errorMessage(),
+                ],
+              ),
             ),
           )),
     );
@@ -165,10 +164,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   _appBar() {
+    final router = AutoRouter.of(context);
     return AppBar(
       leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            router.navigateBack();
           },
           icon: Icon(
             Icons.arrow_back_ios_new_outlined,
